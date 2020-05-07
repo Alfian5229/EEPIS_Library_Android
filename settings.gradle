@@ -1,0 +1,2 @@
+rootProject.name='EEPIS Library'
+include ':app'

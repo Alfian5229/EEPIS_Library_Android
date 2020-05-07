@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">EEPIS Library</string>
+    <string name="cd_logo_login">Logo Login</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_email">Email</string>
+    <string name="bt_login">Login</string>
+    <string name="error_login_failed">Login gagal, email atau password salah</string>
+    <string name="error_input_email_validation">email tidak valid</string>
+    <string name="error_input_email">email harus diisi</string>
+    <string name="error_input_password">password harus diisi</string>
+    <string name="login_message_auth">Mengautentikasi…</string>
+    <string name="login_welcome_text">Selamat Datang Di Perpustakaan PENS</string>
+    <string name="login_welcome_text_2">Silahkan Login Terlebih Dahulu</string>
+</resources>
