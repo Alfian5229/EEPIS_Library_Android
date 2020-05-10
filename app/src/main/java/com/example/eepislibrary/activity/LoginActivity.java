@@ -1,13 +1,12 @@
 package com.example.eepislibrary.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eepislibrary.R;
 import com.example.eepislibrary.activity.api.PostInterface;
@@ -30,8 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private ActivityLoginBinding b;
     private ProgressDialog progressDialog;
-    private String email;
-    private String password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,8 +106,8 @@ public class LoginActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        email = Objects.requireNonNull(b.inputEmail.getText()).toString();
-        password = Objects.requireNonNull(b.inputPassword.getText()).toString();
+        String email = Objects.requireNonNull(b.inputEmail.getText()).toString();
+        String password = Objects.requireNonNull(b.inputPassword.getText()).toString();
 
         if (email.isEmpty()) {
             b.tilEmail.setError(getString(R.string.error_input_email));
@@ -145,44 +142,50 @@ public class LoginActivity extends AppCompatActivity {
         Call<String> call = api.postLogin(email, password);
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                Log.i(TAG, "b");
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.i(TAG, "success_api");
-                    String jsonResponse = response.body();
-                        try {
-                            JSONObject jsonObject = new JSONObject(jsonResponse);
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> res) {
+                if (res.isSuccessful() && res.body() != null) {
+                    String jsonResponse = res.body();
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonResponse);
 
-                            String status = jsonObject.getString("status");
-                            if(status.equals("sukses")){
-                                onLoginSuccess(jsonObject.getString("token"));
-                            }
-                            else{
-                                onLoginFailed(jsonObject.getString("reason"));
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        String status = jsonObject.getString("status");
+                        if(status.equals("success")){
+                            onLoginSuccess(jsonObject.getString("token"));
                         }
+                        else{
+                            onLoginFailed(jsonObject.getString("reason"));
+                        }
+
+                    } catch (JSONException e) {
+                        progressDialog.dismiss();
+                        b.btnLogin.setEnabled(true);
+                        Snackbar.make(b.rootLogin, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG)
+                                .show();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                progressDialog.dismiss();
+                b.btnLogin.setEnabled(true);
+                Snackbar.make(b.rootLogin, Objects.requireNonNull(t.getMessage()), Snackbar.LENGTH_LONG)
+                        .show();
             }
         });
     }
 
     public void onLoginFailed(String reason) {
         progressDialog.dismiss();
-        Snackbar.make(findViewById(R.id.root_login), reason, Snackbar.LENGTH_LONG)
-                .show();
         b.btnLogin.setEnabled(true);
+        Snackbar.make(b.rootLogin, reason, Snackbar.LENGTH_LONG)
+                .show();
     }
 
     public void onLoginSuccess(String token) {
         progressDialog.dismiss();
         b.btnLogin.setEnabled(true);
-        Toast.makeText(this, token, Toast.LENGTH_LONG).show();
+        Snackbar.make(b.rootLogin, token, Snackbar.LENGTH_LONG)
+                .show();
     }
 }
