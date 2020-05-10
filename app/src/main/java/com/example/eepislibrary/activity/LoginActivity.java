@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eepislibrary.R;
-import com.example.eepislibrary.activity.api.PostInterface;
+import com.example.eepislibrary.api.PostInterface;
 import com.example.eepislibrary.databinding.ActivityLoginBinding;
 import com.google.android.material.snackbar.Snackbar;
 
