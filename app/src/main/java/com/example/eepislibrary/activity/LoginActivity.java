@@ -1,9 +1,8 @@
 package com.example.eepislibrary.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.eepislibrary.R;
 import com.example.eepislibrary.api.PostInterface;
 import com.example.eepislibrary.databinding.ActivityLoginBinding;
+import com.example.eepislibrary.utils.Session;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
@@ -25,10 +25,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = "LoginActivity";
+//    private static final String TAG = "LoginActivity";
 
     private ActivityLoginBinding b;
     private ProgressDialog progressDialog;
+    private String email;
+    private Session session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,45 +40,44 @@ public class LoginActivity extends AppCompatActivity {
         b = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
-        b.btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login();
-            }
-        });
+        checkSession();
 
-        b.inputEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    String email = Objects.requireNonNull(b.inputEmail.getText()).toString();
+        b.btnLogin.setOnClickListener(v -> login());
 
-                    if (email.isEmpty()) {
-                        b.tilEmail.setError(getString(R.string.error_input_email));
-                    } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                        b.tilEmail.setError(getString(R.string.error_input_email_validation));
-                    }
-                    else {
-                        b.tilEmail.setError(null);
-                    }
+        b.inputEmail.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                String email = Objects.requireNonNull(b.inputEmail.getText()).toString();
+
+                if (email.isEmpty()) {
+                    b.tilEmail.setError(getString(R.string.error_input_email));
+                } else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    b.tilEmail.setError(getString(R.string.error_input_email_validation));
+                }
+                else {
+                    b.tilEmail.setError(null);
                 }
             }
         });
 
-        b.inputPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    String password = Objects.requireNonNull(b.inputPassword.getText()).toString();
+        b.inputPassword.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                String password = Objects.requireNonNull(b.inputPassword.getText()).toString();
 
-                    if (password.isEmpty()) {
-                        b.tilPassword.setError(getString(R.string.error_input_password));
-                    } else {
-                        b.tilPassword.setError(null);
-                    }
+                if (password.isEmpty()) {
+                    b.tilPassword.setError(getString(R.string.error_input_password));
+                } else {
+                    b.tilPassword.setError(null);
                 }
             }
         });
+    }
+
+    private void checkSession() {
+            session = new Session(getApplicationContext());
+            if(!session.getToken().equals("empty")){
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }
     }
 
     private void login() {
@@ -91,16 +92,10 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage(getString(R.string.login_message_auth));
         progressDialog.show();
 
-        String email = Objects.requireNonNull(b.inputEmail.getText()).toString().trim();
+        email = Objects.requireNonNull(b.inputEmail.getText()).toString().trim();
         String password = Objects.requireNonNull(b.inputPassword.getText()).toString().trim();
 
         loginApiRequest(email, password);
-    }
-
-    @Override
-    public void onBackPressed() {
-        // disable going back to the MainActivity
-        moveTaskToBack(true);
     }
 
     public boolean validate() {
@@ -131,7 +126,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginApiRequest(final String email, String password){
-        Log.i(TAG, "a");
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(PostInterface.JSONURL)
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -150,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         String status = jsonObject.getString("status");
                         if(status.equals("success")){
-                            onLoginSuccess(jsonObject.getString("token"));
+                            onLoginSuccess(jsonObject.getString("name"), jsonObject.getString("token"));
                         }
                         else{
                             onLoginFailed(jsonObject.getString("reason"));
@@ -162,6 +156,12 @@ public class LoginActivity extends AppCompatActivity {
                         Snackbar.make(b.rootLogin, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG)
                                 .show();
                     }
+                }
+                else{
+                    progressDialog.dismiss();
+                    b.btnLogin.setEnabled(true);
+                    Snackbar.make(b.rootLogin, R.string.system_error, Snackbar.LENGTH_LONG)
+                            .show();
                 }
             }
 
@@ -182,10 +182,15 @@ public class LoginActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void onLoginSuccess(String token) {
+    public void onLoginSuccess(String name, String token) {
         progressDialog.dismiss();
         b.btnLogin.setEnabled(true);
         Snackbar.make(b.rootLogin, token, Snackbar.LENGTH_LONG)
                 .show();
+
+        session.setSession(email, name, token);
+
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
