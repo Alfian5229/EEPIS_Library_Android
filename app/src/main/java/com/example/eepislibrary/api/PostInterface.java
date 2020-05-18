@@ -1,5 +1,7 @@
 package com.example.eepislibrary.api;
 
+import com.example.eepislibrary.BuildConfig;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -7,7 +9,7 @@ import retrofit2.http.POST;
 
 public interface PostInterface {
 
-    String JSONURL = "http://192.168.1.6:8000/api/";
+    String JSONURL = BuildConfig.SERVER_URL;
     @FormUrlEncoded
     @POST("login")
     Call<String> postLogin(

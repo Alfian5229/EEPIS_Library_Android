@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+<!--    <color name="colorPrimary">#6200EE</color>-->
+<!--    <color name="colorPrimaryDark">#3700B3</color>-->
+<!--    <color name="colorAccent">#03DAC5</color>-->
 
-    <color name="login_primary">#01579B</color>
-    <color name="login_primary_dark">#01579B</color>
-    <color name="login_primary_darker">#002F6C</color>
+    <color name="color_primary">#01579B</color>
+    <color name="color_primary_dark">#01579B</color>
+    <color name="color_primary_darker">#002F6C</color>
     <color name="login_accent">#FFFFFF</color>
 
     <color name="black">#000000</color>

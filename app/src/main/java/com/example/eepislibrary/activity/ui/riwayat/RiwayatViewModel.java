@@ -1,16 +1,16 @@
-package com.example.eepislibrary.activity.ui.home;
+package com.example.eepislibrary.activity.ui.riwayat;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class RiwayatViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public RiwayatViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Ini adalah halaman utama");
+        mText.setValue("This is slideshow fragment");
     }
 
     LiveData<String> getText() {

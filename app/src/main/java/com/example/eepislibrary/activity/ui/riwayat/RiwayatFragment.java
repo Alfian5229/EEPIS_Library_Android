@@ -1,4 +1,4 @@
-package com.example.eepislibrary.activity.ui.gallery;
+package com.example.eepislibrary.activity.ui.riwayat;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,14 +12,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.eepislibrary.R;
 
-public class GalleryFragment extends Fragment {
+public class RiwayatFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel = new ViewModelProvider(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        RiwayatViewModel riwayatViewModel = new ViewModelProvider(this).get(RiwayatViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_riwayat, container, false);
+        final TextView textView = root.findViewById(R.id.text_slideshow);
+        riwayatViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 }

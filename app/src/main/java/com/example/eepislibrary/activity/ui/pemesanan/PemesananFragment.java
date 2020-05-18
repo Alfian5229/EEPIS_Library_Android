@@ -1,4 +1,4 @@
-package com.example.eepislibrary.activity.ui.slideshow;
+package com.example.eepislibrary.activity.ui.pemesanan;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,14 +12,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.eepislibrary.R;
 
-public class SlideshowFragment extends Fragment {
+public class PemesananFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel = new ViewModelProvider(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        PemesananViewModel pemesananViewModel = new ViewModelProvider(this).get(PemesananViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_pemesanan, container, false);
+        final TextView textView = root.findViewById(R.id.text_gallery);
+        pemesananViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 }
