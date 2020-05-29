@@ -16,9 +16,11 @@ public class RiwayatFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        RiwayatViewModel riwayatViewModel = new ViewModelProvider(this).get(RiwayatViewModel.class);
+        RiwayatFactory riwayatFactory = new RiwayatFactory(requireActivity().getApplication());
+        RiwayatViewModel riwayatViewModel = new ViewModelProvider(this, riwayatFactory)
+                .get(RiwayatViewModel.class);
         View root = inflater.inflate(R.layout.fragment_riwayat, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
+        final TextView textView = root.findViewById(R.id.tv_riwayat_empty);
         riwayatViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
