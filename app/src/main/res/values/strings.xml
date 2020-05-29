@@ -28,4 +28,5 @@
     <string name="home_second">Home Second</string>
     <string name="system_error">Kesalahan sistem!</string>
     <string name="logo_pens">Logo PENS</string>
+    <string name="expired_token_message">Sesi telah habis, silahkan login kembali</string>
 </resources>

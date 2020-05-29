@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private String email;
     private Session session;
+    private PostInterface api;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,25 @@ public class LoginActivity extends AppCompatActivity {
         b = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(b.getRoot());
 
+        init();
         checkSession();
 
+    }
+
+    private void init(){
+        initRetrofit();
+        initButton();
+    }
+
+    private void initRetrofit() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(PostInterface.JSONURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build();
+        api = retrofit.create(PostInterface.class);
+    }
+
+    private void initButton(){
         b.btnLogin.setOnClickListener(v -> login());
 
         b.inputEmail.setOnFocusChangeListener((v, hasFocus) -> {
@@ -75,9 +93,56 @@ public class LoginActivity extends AppCompatActivity {
     private void checkSession() {
             session = new Session(getApplicationContext());
             if(!session.getToken().equals("empty")){
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+                checkToken();
             }
+    }
+
+    private void checkToken() {
+
+        Call<String> call = api.postCekToken(session.getEmail(), session.getToken());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> res) {
+                if (res.isSuccessful() && res.body() != null) {
+                    String jsonResponse = res.body();
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonResponse);
+
+                        String status = jsonObject.getString("status");
+                        if(status.equals("success")){
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }
+                        else{
+                            session.destroySession();
+                            Snackbar.make(b.rootLogin, R.string.expired_token_message, Snackbar.LENGTH_LONG)
+                                    .show();
+                        }
+
+                    } catch (JSONException e) {
+                        progressDialog.dismiss();
+                        b.btnLogin.setEnabled(true);
+                        Snackbar.make(b.rootLogin, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG)
+                                .show();
+                    }
+                }
+                else{
+                    progressDialog.dismiss();
+                    b.btnLogin.setEnabled(true);
+                    Snackbar.make(b.rootLogin, R.string.system_error, Snackbar.LENGTH_LONG)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                progressDialog.dismiss();
+                b.btnLogin.setEnabled(true);
+                Snackbar.make(b.rootLogin, Objects.requireNonNull(t.getMessage()), Snackbar.LENGTH_LONG)
+                        .show();
+            }
+        });
+
     }
 
     private void login() {
@@ -126,12 +191,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginApiRequest(final String email, String password){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(PostInterface.JSONURL)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-
-        PostInterface api = retrofit.create(PostInterface.class);
 
         Call<String> call = api.postLogin(email, password);
         call.enqueue(new Callback<String>() {
