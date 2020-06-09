@@ -1,15 +1,13 @@
 package com.example.eepislibrary.api;
 
-import com.example.eepislibrary.BuildConfig;
-
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
-public interface PostInterface {
-
-    String JSONURL = BuildConfig.SERVER_URL;
+public interface ApiInterface {
 
     @FormUrlEncoded
     @POST("login")
@@ -25,4 +23,15 @@ public interface PostInterface {
             @Field("token") String token
     );
 
+    @GET("list_pesan")
+    Call<String> postListPesan(
+            @Header("id_user") String user,
+            @Header("token") String token
+    );
+
+    @GET("riwayat")
+    Call<String> postRiwayat(
+            @Header("id_user") String user,
+            @Header("token") String token
+    );
 }

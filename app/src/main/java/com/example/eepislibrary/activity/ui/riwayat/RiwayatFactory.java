@@ -11,7 +11,6 @@ import java.util.Objects;
 public class RiwayatFactory implements ViewModelProvider.Factory {
     private Application mApplication;
 
-
     RiwayatFactory(Application application) {
         mApplication = application;
     }

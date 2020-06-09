@@ -30,5 +30,10 @@
     <string name="logo_pens">Logo PENS</string>
     <string name="expired_token_message">Sesi telah habis, silahkan login kembali</string>
 
-    <string name="empty_riwayat_message">"Riwayat kosong, belum pernah meminjam buku"</string>
+    <string name="empty_riwayat_message">"Anda belum pernah meminjam buku"</string>
+    <string name="judul_buku">Judul Buku</string>
+    <string name="tanggal_pinjam">Tanggal Pinjam</string>
+    <string name="tanggal_kembali">Tanggal Kembali</string>
+    <string name="gambar_buku">Gambar Buku</string>
+    <string name="loading">Loading…</string>
 </resources>
