@@ -6,9 +6,12 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -38,12 +41,22 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_home, R.id.nav_pemesanan, R.id.nav_peminjaman, R.id.nav_riwayat)
                 .setDrawerLayout(findViewById(R.id.drawer_layout))
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = getNavController();
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController((NavigationView) findViewById(R.id.nav_view), navController);
 
         init();
 
+    }
+
+    @NonNull
+    private NavController getNavController() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        if (!(fragment instanceof NavHostFragment)) {
+            throw new IllegalStateException("Activity " + this
+                    + " does not have a NavHostFragment");
+        }
+        return ((NavHostFragment) fragment).getNavController();
     }
 
     private void init() {

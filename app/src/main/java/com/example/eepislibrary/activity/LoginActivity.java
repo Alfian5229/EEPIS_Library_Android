@@ -8,7 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.eepislibrary.R;
-import com.example.eepislibrary.api.PostInterface;
+import com.example.eepislibrary.api.ApiClient;
+import com.example.eepislibrary.api.ApiInterface;
 import com.example.eepislibrary.databinding.ActivityLoginBinding;
 import com.example.eepislibrary.utils.Session;
 import com.google.android.material.snackbar.Snackbar;
@@ -21,8 +22,6 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 //    private static final String TAG = "LoginActivity";
@@ -31,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private String email;
     private Session session;
-    private PostInterface api;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,21 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(b.getRoot());
 
         init();
-        checkSession();
 
     }
 
     private void init(){
-        initRetrofit();
+        session = new Session(getApplicationContext());
         initButton();
-    }
-
-    private void initRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(PostInterface.JSONURL)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build();
-        api = retrofit.create(PostInterface.class);
     }
 
     private void initButton(){
@@ -88,61 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void checkSession() {
-            session = new Session(getApplicationContext());
-            if(!session.getToken().equals("empty")){
-                checkToken();
-            }
-    }
-
-    private void checkToken() {
-
-        Call<String> call = api.postCekToken(session.getEmail(), session.getToken());
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> res) {
-                if (res.isSuccessful() && res.body() != null) {
-                    String jsonResponse = res.body();
-                    try {
-                        JSONObject jsonObject = new JSONObject(jsonResponse);
-
-                        String status = jsonObject.getString("status");
-                        if(status.equals("success")){
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                            finish();
-                        }
-                        else{
-                            session.destroySession();
-                            Snackbar.make(b.rootLogin, R.string.expired_token_message, Snackbar.LENGTH_LONG)
-                                    .show();
-                        }
-
-                    } catch (JSONException e) {
-                        progressDialog.dismiss();
-                        b.btnLogin.setEnabled(true);
-                        Snackbar.make(b.rootLogin, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG)
-                                .show();
-                    }
-                }
-                else{
-                    progressDialog.dismiss();
-                    b.btnLogin.setEnabled(true);
-                    Snackbar.make(b.rootLogin, R.string.system_error, Snackbar.LENGTH_LONG)
-                            .show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                progressDialog.dismiss();
-                b.btnLogin.setEnabled(true);
-                Snackbar.make(b.rootLogin, Objects.requireNonNull(t.getMessage()), Snackbar.LENGTH_LONG)
-                        .show();
-            }
-        });
-
     }
 
     private void login() {
@@ -191,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginApiRequest(final String email, String password){
-
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
         Call<String> call = api.postLogin(email, password);
         call.enqueue(new Callback<String>() {
             @Override
@@ -203,7 +137,11 @@ public class LoginActivity extends AppCompatActivity {
 
                         String status = jsonObject.getString("status");
                         if(status.equals("success")){
-                            onLoginSuccess(jsonObject.getString("name"), jsonObject.getString("token"));
+                            onLoginSuccess(
+                                    jsonObject.getString("id_user"),
+                                    jsonObject.getString("name"),
+                                    jsonObject.getString("token")
+                            );
                         }
                         else{
                             onLoginFailed(jsonObject.getString("reason"));
@@ -241,13 +179,13 @@ public class LoginActivity extends AppCompatActivity {
                 .show();
     }
 
-    public void onLoginSuccess(String name, String token) {
+    public void onLoginSuccess(String id_user, String name, String token) {
         progressDialog.dismiss();
         b.btnLogin.setEnabled(true);
         Snackbar.make(b.rootLogin, token, Snackbar.LENGTH_LONG)
                 .show();
 
-        session.setSession(email, name, token);
+        session.setSession(id_user, email, name, token);
 
         startActivity(new Intent(this, MainActivity.class));
         finish();
