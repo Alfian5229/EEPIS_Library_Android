@@ -87,7 +87,7 @@ public class RiwayatFragment extends Fragment {
 
     private void callApiRiwayat() {
         ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<String> call = api.postRiwayat(session.getIdUser(), session.getToken());
+        Call<String> call = api.getRiwayat(session.getIdUser(), session.getToken());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> res) {
@@ -102,25 +102,30 @@ public class RiwayatFragment extends Fragment {
                                 initListRiwayat(jsonObject);
                             }
                             catch (JSONException e){
+                                progressDialog.dismiss();
                                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                         else{
+                            progressDialog.dismiss();
                             Snackbar.make(view, jsonObject.getString("reason"), Snackbar.LENGTH_LONG)
                                     .show();
                         }
 
                     } catch (JSONException e) {
+                        progressDialog.dismiss();
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 }
                 else{
+                    progressDialog.dismiss();
                     Toast.makeText(getContext(), R.string.system_error, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

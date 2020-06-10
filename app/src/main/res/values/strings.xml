@@ -36,4 +36,6 @@
     <string name="tanggal_kembali">Tanggal Kembali</string>
     <string name="gambar_buku">Gambar Buku</string>
     <string name="loading">Loading…</string>
+    <string name="empty_pemesanan_message">Data pemesanan kosong. Klik tombol tambah untuk memesan buku</string>
+    <string name="empty_peminjaman_message">Data peminjaman kosong. Silahkan pesan buku terlebih dahulu untuk meminjam buku</string>
 </resources>
