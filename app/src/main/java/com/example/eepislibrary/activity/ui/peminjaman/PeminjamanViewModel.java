@@ -1,18 +1,21 @@
 package com.example.eepislibrary.activity.ui.peminjaman;
 
+import android.app.Application;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class PeminjamanViewModel extends ViewModel {
+import com.example.eepislibrary.R;
+
+class PeminjamanViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public PeminjamanViewModel() {
+    PeminjamanViewModel(Application context) {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue(context.getString(R.string.empty_pemesanan_message));
     }
-
     LiveData<String> getText() {
         return mText;
     }

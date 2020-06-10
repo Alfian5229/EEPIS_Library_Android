@@ -24,13 +24,19 @@ public interface ApiInterface {
     );
 
     @GET("list_pesan")
-    Call<String> postListPesan(
+    Call<String> getListPesan(
+            @Header("id_user") String user,
+            @Header("token") String token
+    );
+
+    @GET("list_pinjam")
+    Call<String> getListPinjam(
             @Header("id_user") String user,
             @Header("token") String token
     );
 
     @GET("riwayat")
-    Call<String> postRiwayat(
+    Call<String> getRiwayat(
             @Header("id_user") String user,
             @Header("token") String token
     );

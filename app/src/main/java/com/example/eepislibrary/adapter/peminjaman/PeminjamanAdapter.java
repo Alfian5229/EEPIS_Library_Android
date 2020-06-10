@@ -1,4 +1,4 @@
-package com.example.eepislibrary.adapter.riwayat;
+package com.example.eepislibrary.adapter.peminjaman;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,17 +13,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class RiwayatAdapter extends BaseAdapter {
-    private Context context;
-    private ArrayList<RiwayatAdapterItems> listRiwayatAdapter;
+public class PeminjamanAdapter extends BaseAdapter {
 
-    public RiwayatAdapter(ArrayList<RiwayatAdapterItems> listRiwayatAdapter, Context context) {
-        this.listRiwayatAdapter = listRiwayatAdapter;
+    private Context context;
+    private ArrayList<PeminjamanAdapterItems> listPeminjamanAdapter;
+
+    public PeminjamanAdapter(ArrayList<PeminjamanAdapterItems> listPeminjamanAdapter, Context context) {
+        this.listPeminjamanAdapter = listPeminjamanAdapter;
         this.context = context;
     }
     @Override
     public int getCount() {
-        return listRiwayatAdapter.size();
+        return listPeminjamanAdapter.size();
     }
 
     @Override
@@ -40,24 +41,24 @@ public class RiwayatAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         if(convertView == null){
-            convertView = layoutInflater.inflate(R.layout.list_view_riwayat, parent, false);
-            final RiwayatAdapterItems items = listRiwayatAdapter.get(position);
+            convertView = layoutInflater.inflate(R.layout.list_view_peminjaman, parent, false);
+            final PeminjamanAdapterItems items = listPeminjamanAdapter.get(position);
 
-            ImageView imageView = convertView.findViewById(R.id.riwayat_cover_buku);
+            ImageView imageView = convertView.findViewById(R.id.peminjaman_cover_buku);
             Picasso.get().load(items.getGambar()).into(imageView);
 
-            TextView tv_judul = convertView.findViewById(R.id.tv_riwayat_judul);
+            TextView tv_judul = convertView.findViewById(R.id.tv_peminjaman_judul);
             tv_judul.setText(items.getJudul());
 
-            TextView tv_tgl_pinjam = convertView.findViewById(R.id.tv_riwayat_tgl_pinjam);
+            TextView tv_tgl_pinjam = convertView.findViewById(R.id.tv_peminjaman_tgl_pinjam);
             tv_tgl_pinjam.setText(String.format("Tanggal Pinjam: %s", items.getTgl_pinjam()));
 
-            TextView tv_tgl_kembai = convertView.findViewById(R.id.tv_riwayat_tgl_kembali);
-            tv_tgl_kembai.setText(String.format("Tanggal Kembali: %s", items.getTgl_kembali()));
+            TextView tv_batas_waktu = convertView.findViewById(R.id.tv_peminjaman_batas_waktu);
+            tv_batas_waktu.setText(String.format("Tanggal Batas Pengembalian: %s", items.getBatas_waktu()));
 
         }
 
         return convertView;
-
     }
+
 }
