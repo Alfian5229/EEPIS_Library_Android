@@ -14,7 +14,7 @@ class PemesananViewModel extends ViewModel {
 
     PemesananViewModel(Application context) {
         mText = new MutableLiveData<>();
-        mText.setValue(context.getString(R.string.empty_peminjaman_message));
+        mText.setValue(context.getString(R.string.empty_pemesanan_message));
     }
 
     LiveData<String> getText() {

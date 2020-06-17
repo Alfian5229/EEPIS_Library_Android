@@ -14,7 +14,7 @@ class PeminjamanViewModel extends ViewModel {
 
     PeminjamanViewModel(Application context) {
         mText = new MutableLiveData<>();
-        mText.setValue(context.getString(R.string.empty_pemesanan_message));
+        mText.setValue(context.getString(R.string.empty_peminjaman_message));
     }
     LiveData<String> getText() {
         return mText;

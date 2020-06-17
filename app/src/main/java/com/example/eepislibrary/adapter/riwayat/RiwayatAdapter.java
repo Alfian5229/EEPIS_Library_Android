@@ -1,6 +1,7 @@
 package com.example.eepislibrary.adapter.riwayat;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.eepislibrary.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RiwayatAdapter extends BaseAdapter {
     private Context context;
@@ -50,10 +54,28 @@ public class RiwayatAdapter extends BaseAdapter {
             tv_judul.setText(items.getJudul());
 
             TextView tv_tgl_pinjam = convertView.findViewById(R.id.tv_riwayat_tgl_pinjam);
-            tv_tgl_pinjam.setText(String.format("Tanggal Pinjam: %s", items.getTgl_pinjam()));
+            tv_tgl_pinjam.setText(items.getTgl_pinjam());
 
-            TextView tv_tgl_kembai = convertView.findViewById(R.id.tv_riwayat_tgl_kembali);
-            tv_tgl_kembai.setText(String.format("Tanggal Kembali: %s", items.getTgl_kembali()));
+            TextView tv_tgl_kembali = convertView.findViewById(R.id.tv_riwayat_tgl_kembali);
+            tv_tgl_kembali.setText(items.getTgl_kembali());
+
+
+            Drawable start_date = context.getDrawable(R.drawable.ic_startdate);
+            Drawable end_date = context.getDrawable(R.drawable.ic_enddate);
+
+            float density = context.getResources().getDisplayMetrics().density;
+            int width = Math.round(24 * density);
+            int height = Math.round(24 * density);
+
+            Objects.requireNonNull(start_date).setBounds(0, 0, width, height);
+            tv_tgl_pinjam.setCompoundDrawables(start_date, null, null, null);
+            tv_tgl_pinjam.setCompoundDrawablePadding(10);
+            tv_tgl_pinjam.getCompoundDrawables()[0].setTint(ContextCompat.getColor(context, R.color.color_primary));
+
+            Objects.requireNonNull(end_date).setBounds(0, 0, width, height);
+            tv_tgl_kembali.setCompoundDrawables(end_date, null, null, null);
+            tv_tgl_kembali.setCompoundDrawablePadding(10);
+            tv_tgl_kembali.getCompoundDrawables()[0].setTint(ContextCompat.getColor(context, R.color.color_primary));
 
         }
 

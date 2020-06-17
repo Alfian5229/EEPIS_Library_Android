@@ -20,6 +20,8 @@ import com.example.eepislibrary.adapter.riwayat.RiwayatAdapter;
 import com.example.eepislibrary.adapter.riwayat.RiwayatAdapterItems;
 import com.example.eepislibrary.api.ApiClient;
 import com.example.eepislibrary.api.ApiInterface;
+import com.example.eepislibrary.utils.CustomLoading;
+import com.example.eepislibrary.utils.InvalidToken;
 import com.example.eepislibrary.utils.Session;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -72,10 +74,7 @@ public class RiwayatFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
 
-        progressDialog = new ProgressDialog(getContext(),
-                R.style.LoginTheme_Dialog);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(getString(R.string.loading));
+        progressDialog = CustomLoading.getInstance(getContext());
         progressDialog.show();
         populateRiwayat();
     }
@@ -108,8 +107,13 @@ public class RiwayatFragment extends Fragment {
                         }
                         else{
                             progressDialog.dismiss();
-                            Snackbar.make(view, jsonObject.getString("reason"), Snackbar.LENGTH_LONG)
-                                    .show();
+                            if(!jsonObject.getString("reason").equals("Invalid token")){
+                                Snackbar.make(view, jsonObject.getString("reason"), Snackbar.LENGTH_LONG)
+                                        .show();
+                            }
+                            else{
+                                InvalidToken.backToLogin(getContext(), requireActivity());
+                            }
                         }
 
                     } catch (JSONException e) {

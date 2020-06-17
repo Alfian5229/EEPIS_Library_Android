@@ -1,6 +1,7 @@
 package com.example.eepislibrary.adapter.pemesanan;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.eepislibrary.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PemesananAdapter extends BaseAdapter {
     private Context context;
@@ -50,11 +54,28 @@ public class PemesananAdapter extends BaseAdapter {
             tv_judul.setText(items.getJudul());
 
             TextView tv_tgl_pesan = convertView.findViewById(R.id.tv_pemesanan_tgl_pesan);
-            tv_tgl_pesan.setText(String.format("Tanggal Pesan: %s", items.getTgl_pesan()));
+            tv_tgl_pesan.setText(items.getTgl_pesan());
 
             TextView tv_batas_waktu = convertView.findViewById(R.id.tv_pemesanan_batas_waktu);
-            tv_batas_waktu.setText(String.format("Tanggal Batas Pengambilan: %s", items.getBatas_waktu()));
+            tv_batas_waktu.setText(items.getBatas_waktu());
 
+
+            Drawable start_date = context.getDrawable(R.drawable.ic_startdate);
+            Drawable end_date = context.getDrawable(R.drawable.ic_enddate);
+
+            float density = context.getResources().getDisplayMetrics().density;
+            int width = Math.round(24 * density);
+            int height = Math.round(24 * density);
+
+            Objects.requireNonNull(start_date).setBounds(0, 0, width, height);
+            tv_tgl_pesan.setCompoundDrawables(start_date, null, null, null);
+            tv_tgl_pesan.setCompoundDrawablePadding(10);
+            tv_tgl_pesan.getCompoundDrawables()[0].setTint(ContextCompat.getColor(context, R.color.color_primary));
+
+            Objects.requireNonNull(end_date).setBounds(0, 0, width, height);
+            tv_batas_waktu.setCompoundDrawables(end_date, null, null, null);
+            tv_batas_waktu.setCompoundDrawablePadding(10);
+            tv_batas_waktu.getCompoundDrawables()[0].setTint(ContextCompat.getColor(context, R.color.color_primary));
         }
 
         return convertView;
