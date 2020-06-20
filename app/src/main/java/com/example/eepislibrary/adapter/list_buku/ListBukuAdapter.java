@@ -53,7 +53,7 @@ public class ListBukuAdapter extends BaseAdapter {
             TextView tv_judul = convertView.findViewById(R.id.list_buku_judul);
             tv_judul.setText(items.getJudul());
 
-            imageView.getLayoutParams().height = (int) (getColumnWidth(context, parent.findViewById(R.id.gv_list_buku)) * 1.5);
+            imageView.getLayoutParams().height = (int) (getColumnWidth(context, parent.findViewById(R.id.gv_list_buku)) * 1.6);
         }
 
         return convertView;
