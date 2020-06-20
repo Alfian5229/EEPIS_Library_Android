@@ -23,6 +23,13 @@ public interface ApiInterface {
             @Field("token") String token
     );
 
+    @GET("list_buku")
+    Call<String> getListBuku(
+            @Header("id_user") String user,
+            @Header("token") String token
+    );
+
+
     @GET("list_pesan")
     Call<String> getListPesan(
             @Header("id_user") String user,

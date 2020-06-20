@@ -46,4 +46,5 @@
         android:name="com.example.eepislibrary.activity.ui.riwayat.RiwayatFragment"
         android:label="@string/menu_riwayat"
         tools:layout="@layout/fragment_riwayat" />
+
 </navigation>

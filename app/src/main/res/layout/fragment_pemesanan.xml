@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ui.pemesanan.PemesananFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.ui.pemesanan.PemesananFragment"
+    android:id="@+id/frame_pemsanan">
 
     <TextView
         android:id="@+id/tv_pemesanan_empty"
@@ -23,7 +25,7 @@
         android:layout_height="match_parent">
 
         <ListView
-            android:layout_below="@+id/tv_pemesanan_empty"
+            android:visibility="gone"
             android:id="@+id/lv_pemesanan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,8 +37,21 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:clipToPadding="false"
-            android:background="#fafafa" />
+            android:background="@color/white" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_pesan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_baseline_add_24"
+        android:backgroundTint="@color/color_primary"
+        android:contentDescription="@string/tambah"
+        android:layout_margin="16dp"
+        android:tint="@color/white"
+        />
 
 </RelativeLayout>

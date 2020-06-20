@@ -1,6 +1,7 @@
 package com.example.eepislibrary.activity.ui.pemesanan;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.eepislibrary.R;
+import com.example.eepislibrary.activity.ui.list_buku.ListBukuActivity;
 import com.example.eepislibrary.adapter.pemesanan.PemesananAdapter;
 import com.example.eepislibrary.adapter.pemesanan.PemesananAdapterItems;
 import com.example.eepislibrary.api.ApiClient;
@@ -23,6 +25,7 @@ import com.example.eepislibrary.api.ApiInterface;
 import com.example.eepislibrary.utils.CustomLoading;
 import com.example.eepislibrary.utils.InvalidToken;
 import com.example.eepislibrary.utils.Session;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -61,6 +64,9 @@ public class PemesananFragment extends Fragment {
         listView = view.findViewById(R.id.lv_pemesanan);
         tvEmpty = view.findViewById(R.id.tv_pemesanan_empty);
         session = new Session(getContext());
+
+        FloatingActionButton fab = view.findViewById(R.id.fab_add_pesan);
+        fab.setOnClickListener(v -> startActivity(new Intent(getContext(), ListBukuActivity.class)));
 
         swipeRefreshLayout = view.findViewById(R.id.swipe_view_pemesanan);
         swipeRefreshLayout.setOnRefreshListener(() -> {

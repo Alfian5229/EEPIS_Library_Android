@@ -38,4 +38,7 @@
     <string name="loading">Loading…</string>
     <string name="empty_pemesanan_message">Data pemesanan kosong. Klik tombol tambah untuk memesan buku</string>
     <string name="empty_peminjaman_message">Data peminjaman kosong. Silahkan pesan buku terlebih dahulu untuk meminjam buku</string>
+    <string name="tambah">Tambah</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

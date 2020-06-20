@@ -24,7 +24,6 @@
 
         <ListView
             android:visibility="gone"
-            android:layout_below="@+id/tv_riwayat_empty"
             android:id="@+id/lv_riwayat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +35,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:clipToPadding="false"
-            android:background="#fafafa" />
+            android:background="@color/white"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
