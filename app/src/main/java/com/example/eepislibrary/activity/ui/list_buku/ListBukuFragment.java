@@ -1,4 +1,4 @@
-package com.example.eepislibrary.activity.ui.home;
+package com.example.eepislibrary.activity.ui.list_buku;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,14 +12,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.eepislibrary.R;
 
-public class HomeFragment extends Fragment {
+public class ListBukuFragment extends Fragment{
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        ListBukuViewModel listBukuViewModel = new ViewModelProvider(this).get(ListBukuViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        listBukuViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 }

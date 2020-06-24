@@ -6,6 +6,16 @@
     tools:context=".activity.ui.list_buku.ListBukuActivity"
     android:id="@+id/view_list_buku">
 
+    <TextView
+        android:id="@+id/tv_list_buku_empty"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:text="@string/tidak_ada_buku"
+        android:layout_centerInParent="true"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_view_list_buku"
         android:layout_width="match_parent"

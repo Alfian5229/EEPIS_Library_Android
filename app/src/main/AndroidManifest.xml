@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/LoginTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ui.list_buku.ListBukuActivity"></activity>
+        <activity android:name=".activity.ui.detail_buku.DetailBukuActivity"></activity>
+        <activity
+            android:name=".activity.ui.list_buku.ListBukuActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.SplashActivity"
             android:theme="@style/SplashTheme">

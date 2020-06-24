@@ -80,13 +80,13 @@ public class PemesananFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
 
-        progressDialog = CustomLoading.getInstance(getContext());
-        progressDialog.show();
-
         populatePemesanan();
     }
 
     private void populatePemesanan() {
+        progressDialog = CustomLoading.getInstance(getContext());
+        progressDialog.show();
+
         listPemesananData.clear();
         callApiPemesanan();
     }

@@ -25,6 +25,7 @@ public class RiwayatAdapter extends BaseAdapter {
         this.listRiwayatAdapter = listRiwayatAdapter;
         this.context = context;
     }
+
     @Override
     public int getCount() {
         return listRiwayatAdapter.size();

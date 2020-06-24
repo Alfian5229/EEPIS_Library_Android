@@ -23,12 +23,21 @@ public interface ApiInterface {
             @Field("token") String token
     );
 
-    @GET("list_buku")
+    @FormUrlEncoded
+    @POST("list_buku")
     Call<String> getListBuku(
             @Header("id_user") String user,
-            @Header("token") String token
+            @Header("token") String token,
+            @Field("query") String query
     );
 
+    @FormUrlEncoded
+    @POST("pesan")
+    Call<String> postPosan(
+            @Header("id_user") String user,
+            @Header("token") String token,
+            @Field("id_buku") String id_buku
+    );
 
     @GET("list_pesan")
     Call<String> getListPesan(

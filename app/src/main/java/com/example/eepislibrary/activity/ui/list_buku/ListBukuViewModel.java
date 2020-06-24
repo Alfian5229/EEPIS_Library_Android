@@ -1,14 +1,14 @@
-package com.example.eepislibrary.activity.ui.home;
+package com.example.eepislibrary.activity.ui.list_buku;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
+public class ListBukuViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public ListBukuViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("Ini adalah halaman utama");
     }
