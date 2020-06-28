@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ui.buku.BukuActivity"
-    android:id="@+id/view_list_buku">
+    tools:context=".activity.ui.buku.BukuFragment"
+    android:id="@+id/view_buku">
 
     <TextView
-        android:id="@+id/tv_list_buku_empty"
+        android:id="@+id/tv_buku_empty"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:layout_centerInParent="true"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_view_list_buku"
+        android:id="@+id/swipe_view_buku"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

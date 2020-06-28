@@ -1,4 +1,4 @@
-package com.example.eepislibrary.activity.ui.list_buku;
+package com.example.eepislibrary.activity.ui.buku;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -35,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListBukuActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class BukuActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private ArrayList<ListBukuAdapterItems> listBukuData = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -43,13 +43,14 @@ public class ListBukuActivity extends AppCompatActivity implements SearchView.On
     private Session session;
     private ProgressDialog progressDialog;
     private TextView tv_list_buku_empty;
+    private String newText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_buku);
 
-        setTitle("Pesan Buku");
+        setTitle(getString(R.string.pesan_buku));
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         init();
     }
@@ -61,7 +62,7 @@ public class ListBukuActivity extends AppCompatActivity implements SearchView.On
 
         swipeRefreshLayout = findViewById(R.id.swipe_view_list_buku);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            populateListBuku(null);
+            populateListBuku(newText);
             swipeRefreshLayout.setRefreshing(false);
         });
 
@@ -104,7 +105,7 @@ public class ListBukuActivity extends AppCompatActivity implements SearchView.On
                                         .show();
                             }
                             else{
-                                InvalidToken.backToLogin(getApplicationContext(), new ListBukuActivity());
+                                InvalidToken.backToLogin(getApplicationContext(), new BukuActivity());
                             }
                         }
 
@@ -162,6 +163,7 @@ public class ListBukuActivity extends AppCompatActivity implements SearchView.On
 
     @Override
     public boolean onQueryTextChange(String newText) {
+        this.newText = newText;
         progressDialog.show();
         populateListBuku(newText);
 

@@ -19,7 +19,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_beranda">Halaman Utama</string>
+    <string name="menu_buku">Buku</string>
     <string name="menu_pemesanan">Pemesanan Buku</string>
     <string name="menu_peminjaman">Peminjaman Buku</string>
     <string name="menu_riwayat">Riwayat Peminjaman Buku</string>
@@ -43,4 +43,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cari">Cari</string>
     <string name="tidak_ada_buku">Tidak ada buku</string>
+    <string name="ebook">Ebook</string>
+    <string name="empty_ebook_message">Tidak ada Ebook</string>
+    <string name="empty_buku_message">Tidak Ada Buku</string>
+    <string name="pesan_buku">Pesan Buku</string>
 </resources>

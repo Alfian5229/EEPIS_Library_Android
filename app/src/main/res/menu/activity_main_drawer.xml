@@ -4,10 +4,14 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-<!--        <item-->
-<!--            android:id="@+id/nav_home"-->
-<!--            android:icon="@drawable/ic_home_black_24dp"-->
-<!--            android:title="@string/menu_beranda" />-->
+        <item
+            android:id="@+id/nav_buku"
+            android:icon="@drawable/ic_baseline_library_books_24"
+            android:title="@string/menu_buku" />
+        <item
+            android:id="@+id/nav_ebook"
+            android:icon="@drawable/ic_baseline_description_24"
+            android:title="@string/ebook" />
         <item
             android:id="@+id/nav_pemesanan"
             android:icon="@drawable/ic_book_black_24dp"
