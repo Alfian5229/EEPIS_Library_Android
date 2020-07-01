@@ -32,6 +32,14 @@ public interface ApiInterface {
     );
 
     @FormUrlEncoded
+    @POST("list_ebook")
+    Call<String> getListEbook(
+            @Header("id_user") String user,
+            @Header("token") String token,
+            @Field("query") String query
+    );
+
+    @FormUrlEncoded
     @POST("pesan")
     Call<String> postPosan(
             @Header("id_user") String user,

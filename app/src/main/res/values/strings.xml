@@ -47,4 +47,6 @@
     <string name="empty_ebook_message">Tidak ada Ebook</string>
     <string name="empty_buku_message">Tidak Ada Buku</string>
     <string name="pesan_buku">Pesan Buku</string>
+    <string name="tidak_ada_ebook">Tidak Ada Ebook</string>
+    <string name="choose_app">Pilih Aplikasi</string>
 </resources>

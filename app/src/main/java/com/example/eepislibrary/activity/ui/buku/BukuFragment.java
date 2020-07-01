@@ -123,7 +123,7 @@ public class BukuFragment extends Fragment implements SearchView.OnQueryTextList
                                         .show();
                             }
                             else{
-                                InvalidToken.backToLogin(getContext(), new BukuActivity());
+                                InvalidToken.backToLogin(getContext(), requireActivity());
                             }
                         }
 
