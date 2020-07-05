@@ -9,6 +9,7 @@
     <ImageView
         android:id="@+id/riwayat_cover_buku"
         android:layout_width="wrap_content"
+        android:minHeight="150dp"
         android:maxWidth="200dp"
         android:layout_height="wrap_content"
         android:layout_weight=".30"
