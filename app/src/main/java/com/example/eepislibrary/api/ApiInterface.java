@@ -32,6 +32,14 @@ public interface ApiInterface {
     );
 
     @FormUrlEncoded
+    @POST("detail_buku")
+    Call<String> getDetailBuku(
+            @Header("id_user") String user,
+            @Header("token") String token,
+            @Field("id_buku") String id_buku
+    );
+
+    @FormUrlEncoded
     @POST("list_ebook")
     Call<String> getListEbook(
             @Header("id_user") String user,
@@ -40,8 +48,16 @@ public interface ApiInterface {
     );
 
     @FormUrlEncoded
+    @POST("detail_ebook")
+    Call<String> getDetailEbook(
+            @Header("id_user") String user,
+            @Header("token") String token,
+            @Field("id_ebook") String id_ebook
+    );
+
+    @FormUrlEncoded
     @POST("pesan")
-    Call<String> postPosan(
+    Call<String> postPesan(
             @Header("id_user") String user,
             @Header("token") String token,
             @Field("id_buku") String id_buku

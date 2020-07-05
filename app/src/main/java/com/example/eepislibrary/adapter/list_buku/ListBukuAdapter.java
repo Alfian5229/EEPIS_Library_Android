@@ -1,6 +1,8 @@
 package com.example.eepislibrary.adapter.list_buku;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,24 +11,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-
 import com.example.eepislibrary.R;
-import com.example.eepislibrary.api.ApiClient;
-import com.example.eepislibrary.api.ApiInterface;
-import com.example.eepislibrary.utils.Session;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.eepislibrary.activity.ui.detail_buku.DetailBukuActivity;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ListBukuAdapter extends BaseAdapter {
 
@@ -54,6 +43,19 @@ public class ListBukuAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        if(listBukuAdapter.size() == 0){
+            return 1;
+        }
+        return listBukuAdapter.size();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         GridView gridView = parent.findViewById(R.id.gv_list_buku);
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -73,50 +75,14 @@ public class ListBukuAdapter extends BaseAdapter {
         gridView.setOnItemClickListener((parent1, view1, position1, id1) -> {
             String id_buku = listBukuAdapter.get(position1).getId();
 
-            callApiPesan(id_buku, parent);
-
-//            Intent intent = new Intent(context, MainActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("id_buku", id_buku);
-//            intent.putExtras(bundle);
-//            context.startActivity(intent);
+            Intent intent = new Intent(context, DetailBukuActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("id_buku", id_buku);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
 
         return convertView;
-    }
-
-    private void callApiPesan(String id_buku, View view) {
-        Session session = new Session(context);
-
-        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
-        Call<String> call = api.postPosan(session.getIdUser(), session.getToken(), id_buku);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> res) {
-                if (res.isSuccessful() && res.body() != null) {
-                    String jsonResponse = res.body();
-                    try {
-                        JSONObject jsonObject = new JSONObject(jsonResponse);
-                        Snackbar.make(view, jsonObject.getString("reason"), Snackbar.LENGTH_LONG)
-                                .show();
-
-                    } catch (JSONException e) {
-                        Snackbar.make(view, Objects.requireNonNull(e.getMessage()), Snackbar.LENGTH_LONG)
-                                .show();
-                    }
-                }
-                else{
-                    Snackbar.make(view, R.string.system_error, Snackbar.LENGTH_LONG)
-                            .show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                Snackbar.make(view, Objects.requireNonNull(t.getMessage()), Snackbar.LENGTH_LONG)
-                        .show();
-            }
-        });
     }
 
     private int getColumnWidth(GridView gridView) {

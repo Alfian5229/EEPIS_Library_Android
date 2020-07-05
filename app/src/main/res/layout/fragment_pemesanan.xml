@@ -51,6 +51,7 @@
         android:contentDescription="@string/tambah"
         android:layout_margin="16dp"
         android:tint="@color/white"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

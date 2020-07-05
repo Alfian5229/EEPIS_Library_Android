@@ -13,7 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/LoginTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ui.detail_buku.DetailBukuActivity"></activity>
+        <activity android:name=".activity.ui.detail_ebook.DetailEbookActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.ui.detail_buku.DetailBukuActivity"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activity.ui.buku.BukuActivity"
             android:theme="@style/AppTheme" />

@@ -39,8 +39,6 @@
     <string name="empty_pemesanan_message">Data pemesanan kosong. Klik tombol tambah untuk memesan buku</string>
     <string name="empty_peminjaman_message">Data peminjaman kosong. Silahkan pesan buku terlebih dahulu untuk meminjam buku</string>
     <string name="tambah">Tambah</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cari">Cari</string>
     <string name="tidak_ada_buku">Tidak ada buku</string>
     <string name="ebook">Ebook</string>
@@ -49,4 +47,11 @@
     <string name="pesan_buku">Pesan Buku</string>
     <string name="tidak_ada_ebook">Tidak Ada Ebook</string>
     <string name="choose_app">Pilih Aplikasi</string>
+    <string name="tahun_terbit">Tahun Terbit</string>
+    <string name="pengarang">Pengarang</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="detail_buku">Detail Buku</string>
+    <string name="gambar_ebook">Gambar Ebook</string>
+    <string name="baca_ebook">Baca Ebook</string>
+    <string name="detail_ebook">Detail Ebook</string>
 </resources>

@@ -42,6 +42,19 @@ public class RiwayatAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        if(listRiwayatAdapter.size() == 0){
+            return 1;
+        }
+        return listRiwayatAdapter.size();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         if(convertView == null){

@@ -2,7 +2,7 @@ package com.example.eepislibrary.adapter.ebook;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eepislibrary.R;
+import com.example.eepislibrary.activity.ui.detail_ebook.DetailEbookActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -42,6 +43,19 @@ public class ListEbookAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        if(listEbookAdapter.size() == 0){
+            return 1;
+        }
+        return listEbookAdapter.size();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         GridView gridView = parent.findViewById(R.id.gv_list_ebook);
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -59,21 +73,13 @@ public class ListEbookAdapter extends BaseAdapter {
         }
 
         gridView.setOnItemClickListener((parent1, view1, position1, id1) -> {
-            String ebook = listEbookAdapter.get(position1).getEbook();
+            String id_ebook = listEbookAdapter.get(position1).getId();
 
-            Intent chooser = Intent.createChooser(
-                    new Intent(Intent.ACTION_VIEW).setDataAndType(Uri.parse(ebook), "application/pdf"),
-                    context.getString(R.string.choose_app)
-            );
-            chooser.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // optional
-
-            context.startActivity(chooser);
-
-//            Intent intent = new Intent(context, MainActivity.class);
-//            Bundle bundle = new Bundle();
-//            bundle.putString("id_ebook", id_ebook);
-//            intent.putExtras(bundle);
-//            context.startActivity(intent);
+            Intent intent = new Intent(context, DetailEbookActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("id_ebook", id_ebook);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
 
         return convertView;

@@ -42,6 +42,19 @@ public class PeminjamanAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        if(listPeminjamanAdapter.size() == 0){
+            return 1;
+        }
+        return listPeminjamanAdapter.size();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         if(convertView == null){
